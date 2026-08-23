@@ -1,0 +1,15 @@
+[versions]
+android-compileSdk = "37"
+android-minSdk = "24"
+#noinspection EditedTargetSdkVersion
+android-targetSdk = "37"
+
+projectApplicationId = "com.techullurgy.howzapp"
+projectVersionCode = "1"
+projectVersionName = "1.0"
+javaVersion = "21"
+
+[plugins]
+conventions-android-application = { id = "conventions.android.application" }
+conventions-android-application-compose = { id = "conventions.android.application.compose" }
+conventions-kmp-library = { id = "conventions.kmp.library" }

@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: sync-service
+
+services:
+  conversation:
+    url: http://localhost:8081
+  status:
+    url: http://localhost:8082

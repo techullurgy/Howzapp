@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: status-service
+  cassandra:
+    keyspace-name: howzapp_status
+    contact-points: 127.0.0.1:9042
+    local-datacenter: datacenter1
+    schema-action: CREATE_IF_NOT_EXISTS
+    request:
+      timeout: 5s
+      consistency: LOCAL_QUORUM
