@@ -1,13 +1,12 @@
 package com.techullurgy.howzapp.core.network.websockets
 
-import kotlinx.coroutines.channels.ReceiveChannel
+import com.techullurgy.howzapp.core.network.http.NetworkRequestParams
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
-interface WebsocketConnection<ServerToClientEvent, ClientToServerEvent> {
-    val incoming: ReceiveChannel<WebsocketConnectionEvent<ServerToClientEvent>>
+interface WebSocketConnection<Incoming, Outgoing> {
+    val connectionStatus: StateFlow<WebSocketConnectionStatus>
 
-    /**
-     * It suspends until the websocket connection disrupts
-     * */
-    suspend fun connect(url: String)
-    suspend fun send(value: ClientToServerEvent)
+    fun incoming(params: NetworkRequestParams): Flow<Incoming>
+    fun outgoing(message: Outgoing): Boolean
 }

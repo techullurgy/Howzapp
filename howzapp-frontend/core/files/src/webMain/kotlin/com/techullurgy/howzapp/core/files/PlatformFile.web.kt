@@ -16,7 +16,10 @@ import kotlin.js.ExperimentalWasmJsInterop
 internal expect fun DataView<ArrayBuffer>.toByteArray(): ByteArray
 
 @OptIn(ExperimentalWasmJsInterop::class)
-class BrowserFile(private val file: File) : PlatformFile {
+class BrowserFile(
+    private val file: File,
+    override val identifier: String = BrowserFileRegistry.register(file)
+) : PlatformFile {
     override suspend fun getSize(): Long = file.size.toLong()
 
     override suspend fun readChunks(chunkSize: Int, onChunk: suspend (ByteArray, Int) -> Unit) {

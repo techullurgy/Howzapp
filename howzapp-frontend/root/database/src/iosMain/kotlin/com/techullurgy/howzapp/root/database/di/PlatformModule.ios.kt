@@ -2,7 +2,7 @@ package com.techullurgy.howzapp.root.database.di
 
 import androidx.room3.Room
 import androidx.room3.RoomDatabase
-import com.techullurgy.howzapp.database.core.HowzappRoomDatabase
+import com.techullurgy.howzapp.root.database.HowzappRoomDatabase
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO

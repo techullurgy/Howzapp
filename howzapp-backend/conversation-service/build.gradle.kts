@@ -23,12 +23,17 @@ dependencies {
     implementation(server.kotlin.reflect)
     implementation(server.jackson.module.kotlin)
     implementation(server.caffeine)
+    implementation(server.kafka.reactor)
     implementation(server.spring.boot.starter.data.cassandra.reactive)
 
     testImplementation(server.spring.boot.starter.test)
     testImplementation(server.kotlin.test.junit5)
     testRuntimeOnly(server.junit.platform.launcher)
     testImplementation(server.testcontainers.junit.jupiter)
+
+    implementation(platform(server.spring.cloud.bom))
+    implementation(server.spring.cloud.stream)
+    implementation(server.spring.cloud.stream.binder.kafka)
 }
 
 tasks.withType<Test> {

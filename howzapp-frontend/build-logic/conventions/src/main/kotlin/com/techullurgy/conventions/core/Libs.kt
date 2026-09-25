@@ -15,7 +15,7 @@ object Libs {
     private val projectLibs: VersionCatalog get() = project
         .extensions
         .getByType(VersionCatalogsExtension::class.java)
-        .named("project")
+        .named("projectLibs")
 
     context(_: Project) val rootNamespace: String get() = projectLibs.findVersion("projectApplicationId").get().toString()
 
@@ -42,6 +42,7 @@ object Libs {
         context(_: Project) val roomPlugin: String get() = appLibs.findPlugin("room").get().get().pluginId
         context(_: Project) val room3Plugin: String get() = appLibs.findPlugin("room3").get().get().pluginId
         context(_: Project) val roborazziPlugin: String get() = appLibs.findPlugin("roborazzi").get().get().pluginId
+        context(_: Project) val testBalloonPlugin: String get() = appLibs.findPlugin("testBalloon").get().get().pluginId
     }
 
     object Dependencies {
@@ -83,6 +84,7 @@ object Libs {
         context(_: Project) val room3Testing get() = appLibs.findLibrary("androidx-room3-testing").get()
         context(_: Project) val room3Paging get() = appLibs.findLibrary("androidx-room3-paging").get()
         context(_: Project) val sqliteBundled get() = appLibs.findLibrary("sqlite-bundled").get()
+        context(_: Project) val sqliteWeb get() = appLibs.findLibrary("sqlite-web").get()
 
         context(_: Project) val robolectric get() = appLibs.findLibrary("robolectric").get()
         context(_: Project) val roborazzi get() = appLibs.findLibrary("roborazzi").get()
@@ -97,5 +99,8 @@ object Libs {
         context(_: Project) val ktorLogging get() = appLibs.findLibrary("ktor-client-logging").get()
         context(_: Project) val ktorAuth get() = appLibs.findLibrary("ktor-client-auth").get()
         context(_: Project) val ktorWebsockets get() = appLibs.findLibrary("ktor-client-websockets").get()
+
+        context(_: Project) val testBalloonFrameworkCore get() = appLibs.findLibrary("testBalloon-framework-core").get()
+        context(_: Project) val testBalloonIntegrationRobolectric get() = appLibs.findLibrary("testBalloon-integration-robolectric").get()
     }
 }

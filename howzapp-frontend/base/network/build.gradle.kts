@@ -1,9 +1,11 @@
 plugins {
-    alias(project.plugins.conventions.kmp.library)
+    alias(projectLibs.plugins.conventions.kmp.library)
 }
 
 kmpConvention {
-    android {}
+    android {
+        localNamespace = "base.network"
+    }
     ios {}
     jvm {}
     js { enabled = true }
@@ -11,8 +13,8 @@ kmpConvention {
 
     ktor {
         enabled = true
-        auth = true
         websocket = true
+        auth = true
     }
 
     koin {
@@ -23,9 +25,11 @@ kmpConvention {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":core:network:http"))
-            api(project(":core:network:websockets"))
-            implementation(project(":core:session"))
+            implementation(projectLibs.howzapp.common)
+            implementation(projects.core.qualifiers)
+            implementation(projects.core.network.http)
+            implementation(projects.core.network.websockets)
+            implementation(projects.core.network.fileupload)
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.techullurgy.howzapp.feature.chats.domain.api.models.content
 
 data class DocumentMessage(
-    val media: MediaId,
+    val media: Media,
     val fileName: String,
     val fileSize: Long,
     val mimeType: String

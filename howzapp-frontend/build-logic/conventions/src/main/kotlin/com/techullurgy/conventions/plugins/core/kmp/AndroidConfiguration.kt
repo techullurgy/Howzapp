@@ -12,6 +12,9 @@ context(project: Project)
 internal fun KotlinMultiplatformExtension.androidConfigure(config: AndroidConfig) {
     if (config.enabled.get()) {
         project.pluginManager.apply(Libs.Plugins.androidKmpLibraryPlugin)
+
+        println(config.hostTestConfig)
+
         if(config.hostTest.get() && config.hostTestConfig.roborazzi) {
             project.pluginManager.apply(Libs.Plugins.roborazziPlugin)
         }
@@ -32,16 +35,21 @@ internal fun KotlinMultiplatformExtension.androidConfigure(config: AndroidConfig
         // Configure Source Sets dynamically
         sourceSets.apply {
             if (config.hostTest.get()) {
+
                 findByName("androidHostTest")?.dependencies {
                     if (config.hostTestConfig.robolectric) {
                         implementation(Libs.Dependencies.robolectric)
-                        implementation(Libs.Dependencies.androidxComposeUitestJunit4Android)
-                        implementation(Libs.Dependencies.androidxComposeUitestManifest)
+                        if(config.hostTestConfig.composeUiTest) {
+                            implementation(Libs.Dependencies.androidxComposeUitestJunit4Android)
+                            implementation(Libs.Dependencies.androidxComposeUitestManifest)
+                        }
                     }
                     if (config.hostTestConfig.roborazzi) {
                         implementation(Libs.Dependencies.roborazzi)
-                        implementation(Libs.Dependencies.roborazziCompose)
                         implementation(Libs.Dependencies.roborazziRule)
+                        if(config.hostTestConfig.composeUiTest) {
+                            implementation(Libs.Dependencies.roborazziCompose)
+                        }
                     }
                 }
             }

@@ -1,22 +1,13 @@
 plugins {
-    alias(project.plugins.conventions.kmp.library)
+    alias(projectLibs.plugins.conventions.kmp.library)
 }
 
 kmpConvention {
-    android {}
+    android {
+        localNamespace = "core.network.http"
+    }
     ios {}
     jvm {}
     js { enabled = true }
     wasm { enabled = true }
-}
-
-kotlin {
-    sourceSets {
-        commonMain.dependencies {
-            api(project(":core:domain"))
-            api(project(":core:files"))
-
-            implementation(app.kotlinx.io.core)
-        }
-    }
 }

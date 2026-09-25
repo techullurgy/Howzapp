@@ -1,5 +1,5 @@
 plugins {
-    alias(project.plugins.conventions.kmp.library)
+    alias(projectLibs.plugins.conventions.kmp.library)
 }
 
 kmpConvention {
@@ -15,7 +15,8 @@ kmpConvention {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":feature:users:domain:api"))
+            api(projects.feature.users.domain.api)
+            api(projects.core.domain)
             api(app.androidx.paging3.common)
         }
     }

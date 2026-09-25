@@ -11,16 +11,16 @@ internal class HowzappDatabaseImpl internal constructor(
 ): Database {
     override suspend fun <R> withWriteTransaction(
         block: suspend () -> R
-    ) {
-        howzappRoomDatabase.withWriteTransaction {
+    ): R {
+        return howzappRoomDatabase.withWriteTransaction {
             block()
         }
     }
 
     override suspend fun <R> withReadTransaction(
         block: suspend () -> R
-    ) {
-        howzappRoomDatabase.withReadTransaction {
+    ): R {
+        return howzappRoomDatabase.withReadTransaction {
             block()
         }
     }

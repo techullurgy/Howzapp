@@ -26,6 +26,10 @@ dependencies {
     implementation(server.jackson.module.kotlin)
     implementation(server.kotlinx.coroutines.reactor)
 
+    api(platform(server.spring.cloud.bom))
+    api(server.spring.cloud.stream)
+    implementation(server.spring.cloud.stream.binder.kafka)
+
     testImplementation(server.spring.boot.starter.test)
     testImplementation(server.kotlin.test.junit5)
     testRuntimeOnly(server.junit.platform.launcher)

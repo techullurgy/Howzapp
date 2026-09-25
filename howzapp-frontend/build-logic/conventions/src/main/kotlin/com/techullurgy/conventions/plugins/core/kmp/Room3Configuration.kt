@@ -7,6 +7,8 @@ import com.techullurgy.conventions.extensions.core.Room3Config
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.getting
+import org.gradle.kotlin.dsl.provideDelegate
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 context(project: Project, kmpExtension: KotlinMultiplatformExtension)
@@ -66,15 +68,29 @@ internal fun room3Configure(config: Room3Config) {
                     }
 
                     if(config.compiler) {
-                        findByName("androidMain")?.dependencies {
-                            implementation(Libs.Dependencies.sqliteBundled)
+                        listOf(
+                            findByName("androidMain"),
+                            findByName("jvmMain"),
+                        ).forEach { sourceSet ->
+                            sourceSet?.dependencies {
+                                implementation(Libs.Dependencies.sqliteBundled)
+                            }
                         }
-                        findByName("iosMain")?.dependencies {
-                            implementation(Libs.Dependencies.sqliteBundled)
-                        }
-                        findByName("jvmMain")?.dependencies {
-                            implementation(Libs.Dependencies.sqliteBundled)
-                        }
+
+                        try {
+                            iosMain.dependencies {
+                                implementation(Libs.Dependencies.sqliteBundled)
+                            }
+                        } catch (_: Exception) {}
+
+                        try {
+                            webMain.dependencies {
+                                implementation(Libs.Dependencies.sqliteWeb)
+//                                implementation(
+//                                    npm("sql-js-worker", layout.projectDirectory.dir("worker").asFile)
+//                                )
+                            }
+                        } catch (_: Exception) {}
                     }
 
                     if(config.test) {

@@ -25,7 +25,7 @@ sealed interface MessageContentDto {
 
     @Serializable
     data class DocumentMessageDto(
-        val media: String,
+        val media: MediaDto,
         val fileName: String,
         val fileSize: Long,
         val mimeType: String
@@ -38,7 +38,7 @@ sealed interface MessageContentDto {
 
     @Serializable
     data class ImageMessageDto(
-        val media: MediaDto,
+        val medias: List<MediaDto>,
         val caption: String?
     ): MessageContentDto
 

@@ -25,7 +25,7 @@ sealed interface MessageContentStored {
 
     @Serializable
     data class DocumentMessageStored(
-        val media: String,
+        val media: MediaStored,
         val fileName: String,
         val fileSize: Long,
         val mimeType: String
@@ -38,7 +38,7 @@ sealed interface MessageContentStored {
 
     @Serializable
     data class ImageMessageStored(
-        val media: MediaStored,
+        val medias: List<MediaStored>,
         val caption: String?
     ): MessageContentStored
 

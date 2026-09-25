@@ -8,6 +8,6 @@
 
 rootProject.name = "howzapp"
 
-includeBuild("howzapp-frontend")
+// includeBuild("howzapp-frontend")
 includeBuild("howzapp-backend")
-includeBuild("howzapp-common")
+// includeBuild("howzapp-common")

@@ -1,7 +1,6 @@
 package com.techullurgy.howzapp.user.services
 
 import com.techullurgy.howzapp.common.core.pubsub.IPubSubManager
-import com.techullurgy.howzapp.common.core.pubsub.PubSubConstants
 import com.techullurgy.howzapp.common.events.UserPresenceEvent
 import kotlinx.coroutines.reactor.mono
 import org.springframework.boot.context.event.ApplicationReadyEvent

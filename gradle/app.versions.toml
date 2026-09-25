@@ -1,82 +1,78 @@
 [versions]
-agp = "9.2.1"
+agp = "9.4.0"
 android-compileSdk = "37"
 android-minSdk = "24"
 android-targetSdk = "37"
 androidx-activity = "1.13.0"
-androidx-appcompat = "1.7.1"
+androidx-appcompat = "1.8.0"
 androidx-core = "1.19.0"
 androidx-espresso = "3.7.0"
-androidx-lifecycle = "2.11.0"
-androidx-lifecycle-compose = "2.11.0"
+lifecycle = "2.12.0-alpha03"
+jetbrainsLifecycle = "2.11.0"
 androidxTestRunner = "1.7.0"
 androidxTestRules = "1.7.0"
 androidxTestOrchestrator = "1.6.1"
-lifecycleRuntimeKtx = "2.11.0"
-lifecycle-navigation3 = "2.11.0"
-jetbrainsNav3Lifecycle = "2.11.0"
 androidDesugarJdkLibs = "2.1.5"
 androidTools = "32.3.0"
-buildkonfig = "0.22.0"
-composeMultiplatform = "1.11.1"
-composeTest = "1.11.4"
+buildkonfig = "0.23.0"
+composeMultiplatform = "1.12.0"
+composeTest = "1.13.0-alpha03"
 composeMaterial3 = "1.11.0-alpha07"
 composeMaterial3Adaptive = "1.3.0-beta02"
 junit = "4.13.2"
 androidXJunit = "1.3.0"
-kotlin = "2.4.0"
-kotlinx-serialization = "1.11.0"
-kotlinx-coroutines = "1.11.0"
-kotlinx-datetime = "0.8.0"
 kotlinx-io = "0.9.1"
 turbine = "1.2.1"
-coil = "3.5.0"
-ktor = "3.5.1"
+coil = "3.6.3"
+ktor = "3.6.0"
 navigation3 = "1.2.0-alpha05"
 koin = "4.2.2"
-koin-compiler = "1.0.2"
-ksp = "2.3.9"
+koin-compiler = "1.2.1"
+ksp = "2.3.12"
 gms = "4.5.0"
-room2 = "2.8.4"
-room3 = "3.0.0"
+room2 = "2.8.5"
+room3 = "3.0.3"
 paging3 = "3.5.0"
-sqlite = "2.7.0"
-media3 = "1.10.1"
+sqlite = "2.7.1"
+media3 = "1.11.1"
 datastore = "1.2.1"
-adaptive = "1.9.0"
-firebase-bom = "34.16.0"
-robolectric = "4.16.1"
-roborazzi = "1.70.0"
-kotest = "6.2.3"
+adaptive = "1.2.0"
+windowSizeClass = "1.9.0"
+firebase-bom = "34.19.0"
+robolectric = "4.17"
+roborazzi = "1.74.0"
+kotest = "6.2.5"
 assertk = "0.28.1"
 mockk = "1.14.11"
-kermit = "2.1.0"
+kermit = "2.2.0"
 kover = "0.9.9"
 ktlint-gradle = "14.2.0"
-spotless = "8.8.0"
-kotlinter = "5.6.0"
-detekt = "2.0.0-alpha.5"
-composeLintRules = "0.6.3"
-mockwebserver = "5.4.0"
+spotless = "8.10.2"
+kotlinter = "5.7.0"
+detekt = "2.0.0-alpha.6"
+composeLintRules = "0.6.6"
+mockwebserver = "5.5.0"
 uiautomator = "2.4.0"
-benchmarkMacroJunit4 = "1.4.1"
-baselineprofile = "1.5.0-alpha07"
+benchmarkMacroJunit4 = "1.5.0"
+baselineprofile = "1.5.0"
 profileinstaller = "1.4.1"
 composeHotReload = "1.2.0"
 secretsGradlePlugin = "2.0.1"
 playServicesMaps = "20.0.0"
 playServicesLocation = "21.4.0"
-mapsCompose = "8.4.0"
+mapsCompose = "9.0.0-rc03"
 places = "5.3.0"
-mapsAndroidUtils = "5.0.0"
-mapsUtilsKtx = "6.2.0"
-composeStabilityAnalyzer = "0.11.1"
+mapsAndroidUtils = "6.0.0-rc04"
+mapsUtilsKtx = "6.4.1"
+composeStabilityAnalyzer = "0.14.0"
 composeBom = "2026.06.01"
 material = "1.14.0"
 kotlinGraphicsMath = "1.8.0"
-jetbrainsNav3Ui = "1.1.1"
-jetbrainsNav3Adaptive = "1.3.0-beta02"
-kotlin-wrappers = "2026.7.5"
+jetbrainsNav3Ui = "1.2.0-beta01"
+jetbrainsNav3Adaptive = "1.3.0-rc01"
+kotlin-wrappers = "2026.9.2"
+testBalloon = "1.1.0"
+
 
 [libraries]
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidXJunit" }
@@ -105,15 +101,15 @@ androidx-compose-uitest-manifest = { module = "androidx.compose.ui:ui-test-manif
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-espresso" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-androidx-lifecycle-viewmodelCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle-compose" }
-androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-compose" }
-androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "androidx-lifecycle" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodelCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "jetbrainsLifecycle" }
+androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "jetbrainsLifecycle" }
+androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "lifecycle" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinx-io" }
 
 # TEST-UTILS
@@ -127,12 +123,12 @@ androidx-paging3-testing = { module = "androidx.paging:paging-testing", version.
 # Navigation 3
 androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "navigation3" }
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3" }
-lifecycle-viewmodel-navigation3 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "lifecycle-navigation3" }
+lifecycle-viewmodel-navigation3 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "lifecycle" }
 
 # Jetbrains Navigation 3
 jetbrains-androidx-navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "jetbrainsNav3Ui" }
 jetbrains-material3-adaptiveNavigation3 = { module = "org.jetbrains.compose.material3.adaptive:adaptive-navigation3", version.ref = "jetbrainsNav3Adaptive" }
-jetbrains-lifecycle-viewmodel-navigation3 = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "jetbrainsNav3Lifecycle" }
+jetbrains-lifecycle-viewmodel-navigation3 = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "jetbrainsLifecycle" }
 
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
@@ -157,11 +153,12 @@ koin-compose-navigation3 = { group = "io.insert-koin", name = "koin-compose-navi
 koin-test = { group = "io.insert-koin", name = "koin-test" }
 koin-test-junit4 = { group = "io.insert-koin", name = "koin-test-junit4" }
 koin-annotations = { group = "io.insert-koin", name = "koin-annotations" }
-koin-ksp-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koin" } # DEPRECATED.REMOVAL
 
 # DataStore
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
+datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 
 # Media3
 media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
@@ -171,13 +168,14 @@ media3-ui-compose = { module = "androidx.media3:media3-ui-compose", version.ref 
 # Material3 Adaptive
 material3-adaptive-layout = { module = "org.jetbrains.compose.material3.adaptive:adaptive-layout", version.ref = "adaptive" }
 material3-adaptive-navigation = { module = "org.jetbrains.compose.material3.adaptive:adaptive-navigation", version.ref = "adaptive" }
-material3-windowSizeClass = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "adaptive" }
+material3-windowSizeClass = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "windowSizeClass" }
 
 # Room
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room2" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room2" }
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "room2" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+sqlite-web = { module = "androidx.sqlite:sqlite-web", version.ref = "sqlite" }
 androidx-room3-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room3" }
 androidx-room3-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room3" }
 androidx-room3-testing = { module = "androidx.room3:room3-testing", version.ref = "room3" }
@@ -262,6 +260,11 @@ kotlin-graphics-math = { module = "dev.romainguy:kotlin-math", version.ref = "ko
 # WEB
 wrappers-browser = { module = "org.jetbrains.kotlin-wrappers:kotlin-browser", version.ref = "kotlin-wrappers" }
 
+# TestBalloon
+testBalloon-framework-core = { module = "de.infix.testBalloon:testBalloon-framework-core", version.ref = "testBalloon" }
+testBalloon-integration-robolectric = { module = "de.infix.testBalloon:testBalloon-integration-robolectric", version.ref = "testBalloon" }
+
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -290,3 +293,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineprofile" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin" }
+testBalloon = { id = "de.infix.testBalloon", version.ref = "testBalloon" }

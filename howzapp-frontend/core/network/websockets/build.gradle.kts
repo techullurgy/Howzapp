@@ -1,5 +1,5 @@
 plugins {
-    alias(project.plugins.conventions.kmp.library)
+    alias(projectLibs.plugins.conventions.kmp.library)
 }
 
 kmpConvention {
@@ -15,7 +15,7 @@ kmpConvention {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":core:domain"))
+            api(projects.core.network.http)
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.techullurgy.howzapp.core.files
 
 interface PlatformFile {
+    val identifier: String
+
     suspend fun getSize(): Long
 
     /**

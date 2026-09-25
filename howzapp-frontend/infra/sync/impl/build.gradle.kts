@@ -1,5 +1,5 @@
 plugins {
-    alias(project.plugins.conventions.kmp.library)
+    alias(projectLibs.plugins.conventions.kmp.library)
 }
 
 kmpConvention {
@@ -19,10 +19,11 @@ kmpConvention {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":infra:sync:api"))
-            implementation(project(":core:session"))
-            implementation(project(":core:network:system"))
-            implementation(project(":core:network:websockets"))
+            implementation(projectLibs.howzapp.common)
+            api(projects.infra.sync.api)
+            implementation(projects.core.session)
+            implementation(projects.core.network.system)
+            implementation(projects.core.network.websockets)
         }
     }
 }

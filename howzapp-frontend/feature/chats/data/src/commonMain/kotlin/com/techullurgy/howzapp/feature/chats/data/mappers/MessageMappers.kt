@@ -12,7 +12,6 @@ import com.techullurgy.howzapp.feature.chats.db.models.CallTypeStored
 import com.techullurgy.howzapp.feature.chats.db.models.ContactCardStored
 import com.techullurgy.howzapp.feature.chats.db.models.MediaStored
 import com.techullurgy.howzapp.feature.chats.db.models.MessageContentStored
-import com.techullurgy.howzapp.feature.chats.db.models.MessageContentTypeStored
 import com.techullurgy.howzapp.feature.chats.db.models.MessageDeliveryStatusStored
 import com.techullurgy.howzapp.feature.chats.db.models.MessageReactionStored
 import com.techullurgy.howzapp.feature.chats.db.models.MessageReactionsStored
@@ -47,7 +46,6 @@ import com.techullurgy.howzapp.feature.users.domain.api.models.UserId
 import kotlin.time.Clock
 import kotlin.time.Instant
 
-
 internal fun MessageDto.toConversationMessage(): ConversationMessage {
     return ConversationMessage(
         id = ConversationMessageId(messageId),
@@ -74,7 +72,6 @@ internal fun ConversationMessage.toConversationMessageEntity(): ConversationMess
         senderId = senderId.id,
         createdAt = timestamp.toEpochMilliseconds(),
         updatedAt = Clock.System.now().toEpochMilliseconds(),
-        type = content.toMessageContentTypeStored(),
         content = content.toMessageContentStored(),
         status = status?.toMessageDeliveryStatusStored(),
         reactions = reactions.toMessageReactionsStored(),
@@ -130,14 +127,14 @@ internal fun MessageContentStored.toMessageContent(): MessageContent {
             )
         )
         is MessageContentStored.DocumentMessageStored -> DocumentMessage(
-            media = MediaId(media),
+            media = media.toMedia(),
             fileName = fileName,
             fileSize = fileSize,
             mimeType = mimeType
         )
         is MessageContentStored.GifMessageStored -> GifMessage(media = media.toMedia())
         is MessageContentStored.ImageMessageStored -> ImageMessage(
-            media = media.toMedia(),
+            medias = medias.map { it.toMedia() },
             caption = caption
         )
         is MessageContentStored.LocationMessageStored -> LocationMessage(
@@ -268,14 +265,14 @@ internal fun MessageContent.toMessageContentStored(): MessageContentStored {
             )
         )
         is DocumentMessage -> MessageContentStored.DocumentMessageStored(
-            media = media.id,
+            media = media.toMediaStored(),
             fileName = fileName,
             fileSize = fileSize,
             mimeType = mimeType
         )
         is GifMessage -> MessageContentStored.GifMessageStored(media = media.toMediaStored())
         is ImageMessage -> MessageContentStored.ImageMessageStored(
-            media = media.toMediaStored(),
+            medias = medias.map { it.toMediaStored() },
             caption = caption
         )
         is LocationMessage -> MessageContentStored.LocationMessageStored(
@@ -326,23 +323,7 @@ internal fun MessageContent.toMessageContentStored(): MessageContentStored {
         )
     }
 }
-internal fun MessageContent.toMessageContentTypeStored(): MessageContentTypeStored {
-    return when(this) {
-        is AudioMessage -> MessageContentTypeStored.AUDIO
-        is CallMessage -> MessageContentTypeStored.CALL
-        is ContactMessage -> MessageContentTypeStored.CONTACT
-        is DocumentMessage -> MessageContentTypeStored.DOCUMENT
-        is GifMessage -> MessageContentTypeStored.GIF
-        is ImageMessage -> MessageContentTypeStored.IMAGE
-        is LocationMessage -> MessageContentTypeStored.LOCATION
-        is PollMessage -> MessageContentTypeStored.POLL
-        is StickerMessage -> MessageContentTypeStored.STICKER
-        is SystemMessage -> MessageContentTypeStored.SYSTEM
-        is TextMessage -> MessageContentTypeStored.TEXT
-        is VideoMessage -> MessageContentTypeStored.VIDEO
-        is VoiceMessage -> MessageContentTypeStored.VOICE
-    }
-}
+
 internal fun MessageDeliveryStatus.toMessageDeliveryStatusStored(): MessageDeliveryStatusStored {
     return when(this) {
         MessageDeliveryStatus.PENDING -> MessageDeliveryStatusStored.PENDING
@@ -389,14 +370,14 @@ internal fun MessageContentDto.toMessageContent(): MessageContent {
             )
         )
         is MessageContentDto.DocumentMessageDto -> DocumentMessage(
-            media = MediaId(media),
+            media = media.toMedia(),
             fileName = fileName,
             fileSize = fileSize,
             mimeType = mimeType
         )
         is MessageContentDto.GifMessageDto -> GifMessage(media = media.toMedia())
         is MessageContentDto.ImageMessageDto -> ImageMessage(
-            media = media.toMedia(),
+            medias = medias.map { it.toMedia() },
             caption = caption
         )
         is MessageContentDto.LocationMessageDto -> LocationMessage(

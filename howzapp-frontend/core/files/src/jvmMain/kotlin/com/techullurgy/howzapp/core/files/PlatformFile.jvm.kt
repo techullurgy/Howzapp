@@ -8,6 +8,9 @@ import java.io.FileInputStream
 
 class JvmFile(private val file: File) : PlatformFile {
 
+    override val identifier: String
+        get() = file.absolutePath
+
     override suspend fun getSize(): Long = withContext(Dispatchers.IO) {
         file.length()
     }

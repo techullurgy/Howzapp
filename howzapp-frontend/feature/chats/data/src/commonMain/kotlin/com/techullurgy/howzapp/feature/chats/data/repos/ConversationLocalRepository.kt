@@ -6,8 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface ConversationLocalRepository {
     suspend fun saveMessage(entity: ConversationMessage)
 
-    suspend fun updateMessageId(oldMessageId: String, newMessageId: String)
-
     fun observeConversationMessages(conversationId: String): Flow<List<ConversationMessage>>
 
     suspend fun getMessagesBefore(

@@ -7,7 +7,10 @@ android-targetSdk = "37"
 projectApplicationId = "com.techullurgy.howzapp"
 projectVersionCode = "1"
 projectVersionName = "1.0"
-javaVersion = "21"
+javaVersion = "25"
+
+[libraries]
+howzapp-common = { module = "com.techullurgy.howzapp:howzapp-common" }
 
 [plugins]
 conventions-android-application = { id = "conventions.android.application" }

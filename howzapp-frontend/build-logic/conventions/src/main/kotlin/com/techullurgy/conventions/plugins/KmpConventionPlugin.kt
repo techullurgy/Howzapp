@@ -102,6 +102,12 @@ class KmpConventionPlugin : Plugin<Project> {
                 }
             }
 
+            extension.onTestBalloonConfigure = {
+                extensions.configure<KotlinMultiplatformExtension> {
+                    testBalloonConfigure(it)
+                }
+            }
+
             extension.onRoom2Configure = {
             }
         }

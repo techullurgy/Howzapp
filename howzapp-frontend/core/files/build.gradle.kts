@@ -1,9 +1,11 @@
 plugins {
-    alias(project.plugins.conventions.kmp.library)
+    alias(projectLibs.plugins.conventions.kmp.library)
 }
 
 kmpConvention {
-    android {}
+    android {
+        localNamespace = "core.files"
+    }
     ios {}
     jvm {}
     js { enabled = true }
@@ -12,6 +14,11 @@ kmpConvention {
 
 kotlin {
     sourceSets {
+        androidMain {
+            dependencies {
+                implementation("androidx.startup:startup-runtime:1.2.0")
+            }
+        }
         webMain {
             dependencies {
                 implementation(app.wrappers.browser)

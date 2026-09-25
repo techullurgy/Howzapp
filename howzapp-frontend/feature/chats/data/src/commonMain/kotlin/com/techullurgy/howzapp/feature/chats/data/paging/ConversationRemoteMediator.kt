@@ -4,8 +4,9 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.techullurgy.howzapp.feature.chats.data.handlers.MessageResponseHandler
-import com.techullurgy.howzapp.feature.chats.data.repos.ConversationApiRepository
+import com.techullurgy.howzapp.core.database.Database
+import com.techullurgy.howzapp.feature.chats.data.mappers.toConversationMessage
+import com.techullurgy.howzapp.feature.chats.data.repos.ConversationApi
 import com.techullurgy.howzapp.feature.chats.data.repos.ConversationLocalRepository
 import com.techullurgy.howzapp.feature.chats.domain.api.models.ConversationMessage
 import kotlin.time.Clock
@@ -14,9 +15,9 @@ import kotlin.time.Clock
 internal class ConversationRemoteMediator(
     private val conversationId: String,
     private val refreshTimestamp: Long?,
-    private val apiService: ConversationApiRepository,
-    private val messageResponseHandler: MessageResponseHandler,
-    private val conversationLocalRepository: ConversationLocalRepository
+    private val conversationApi: ConversationApi,
+    private val conversationLocalRepository: ConversationLocalRepository,
+    private val database: Database
 ): RemoteMediator<Long, ConversationMessage>() {
     override suspend fun load(
         loadType: LoadType,
@@ -47,17 +48,22 @@ internal class ConversationRemoteMediator(
             val messageHistoryResponses = when (loadType) {
                 LoadType.REFRESH -> {
                     val key = loadKey ?: Clock.System.now().toEpochMilliseconds()
-                    apiService.getMessagesAround(conversationId, key, state.config.initialLoadSize)
+                    conversationApi.getMessagesAround(conversationId, key, state.config.initialLoadSize)
                 }
                 LoadType.PREPEND -> {
-                    apiService.getMessagesAfter(conversationId, loadKey!!, state.config.pageSize)
+                    conversationApi.getMessagesAfter(conversationId, loadKey!!, state.config.pageSize)
                 }
                 LoadType.APPEND -> {
-                    apiService.getMessagesBefore(conversationId, loadKey!!, state.config.pageSize)
+                    conversationApi.getMessagesBefore(conversationId, loadKey!!, state.config.pageSize)
                 }
             }
 
-            messageResponseHandler.handle(messageHistoryResponses.messages)
+            database.withWriteTransaction {
+                messageHistoryResponses.messages.forEach {
+                    val message = it.message.toConversationMessage()
+                    conversationLocalRepository.saveMessage(message)
+                }
+            }
 
             val endOfPaginationReached = messageHistoryResponses.messages.isEmpty()
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)

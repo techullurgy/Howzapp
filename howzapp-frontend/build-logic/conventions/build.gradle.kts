@@ -50,36 +50,3 @@ gradlePlugin {
         }
     }
 }
-
-//gradlePlugin {
-//    plugins {
-//        register("androidApplication") {
-//            id = "$groupNamePrefix.conventions.android.application"
-//            implementationClass = "AndroidApplicationConventionPlugin"
-//        }
-//        register("androidComposeApplication") {
-//            id = "$groupNamePrefix.conventions.android.application.compose"
-//            implementationClass = "AndroidApplicationComposeConventionPlugin"
-//        }
-//        register("kmpLibrary") {
-//            id = "$groupNamePrefix.conventions.kmp.library"
-//            implementationClass = "KmpLibraryConventionPlugin"
-//        }
-//        register("cmpLibrary") {
-//            id = "$groupNamePrefix.conventions.cmp.library"
-//            implementationClass = "CmpLibraryConventionPlugin"
-//        }
-//        register("buildKonfig") {
-//            id = "$groupNamePrefix.conventions.buildkonfig"
-//            implementationClass = "BuildKonfigConventionPlugin"
-//        }
-//        register("room") {
-//            id = "$groupNamePrefix.conventions.room"
-//            implementationClass = "RoomConventionPlugin"
-//        }
-//        register("koinCompiler") {
-//            id = "$groupNamePrefix.conventions.koin.compiler"
-//            implementationClass = "KoinAnnotationsConventionPlugin"
-//        }
-//    }
-//}

@@ -8,6 +8,7 @@ set -eu
 ROOT="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 
 PROJECTS_PATH="
+.
 howzapp-backend
 howzapp-frontend
 "

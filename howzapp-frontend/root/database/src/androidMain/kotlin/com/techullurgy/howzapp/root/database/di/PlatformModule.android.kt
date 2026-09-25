@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room3.Room
 import androidx.room3.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
-import com.techullurgy.howzapp.database.core.HowzappRoomDatabase
+import com.techullurgy.howzapp.root.database.HowzappRoomDatabase
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Provided

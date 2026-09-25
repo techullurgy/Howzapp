@@ -1,6 +1,6 @@
 package com.techullurgy.howzapp.feature.chats.data.temp
 
-import com.techullurgy.howzapp.feature.chats.data.repos.ConversationApiRepository
+import com.techullurgy.howzapp.feature.chats.data.repos.ConversationApi
 import com.techullurgy.howzapp.feature.chats.domain.api.models.ConversationId
 import com.techullurgy.howzapp.feature.chats.domain.api.models.ConversationMessage
 import com.techullurgy.howzapp.feature.chats.domain.api.models.ConversationMessageId
@@ -14,7 +14,7 @@ import kotlin.time.Instant
 private const val INTERVAL_MS = 30 * 60 * 1000L // 30 minutes
 
 @Singleton
-class FakeMessageGenerator: ConversationApiRepository {
+class FakeMessageGenerator: ConversationApi {
     private val latestTimestamp: Long = Clock.System.now().toEpochMilliseconds()
 
     override fun getMessagesAround(

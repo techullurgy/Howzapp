@@ -20,6 +20,7 @@ open class KmpConventionPluginExtension @Inject constructor(
     internal val room3Config = objects.newInstance(Room3Config::class.java)
     internal val navigation3Config = objects.newInstance(Navigation3Config::class.java)
     internal val ktorConfig = objects.newInstance(KtorConfig::class.java)
+    internal val testBalloonConfig = objects.newInstance(TestBalloonConfig::class.java)
 
     internal var onKmpConfigure: ((KmpConfig) -> Unit)? = null
     internal var onAndroidConfigure: ((AndroidConfig) -> Unit)? = null
@@ -33,6 +34,7 @@ open class KmpConventionPluginExtension @Inject constructor(
     internal var onRoom3Configure: ((Room3Config) -> Unit)? = null
     internal var onNavigation3Configure: ((Navigation3Config) -> Unit)? = null
     internal var onKtorConfigure: ((KtorConfig) -> Unit)? = null
+    internal var onTestBalloonConfigure: ((TestBalloonConfig) -> Unit)? = null
 
     fun kmp(action: Action<KmpConfig>) {
         action.execute(kmpConfig)
@@ -92,5 +94,10 @@ open class KmpConventionPluginExtension @Inject constructor(
     fun ktor(action: Action<KtorConfig>) {
         action.execute(ktorConfig)
         onKtorConfigure?.invoke(ktorConfig)
+    }
+
+    fun testBalloon(action: Action<TestBalloonConfig>) {
+        action.execute(testBalloonConfig)
+        onTestBalloonConfigure?.invoke(testBalloonConfig)
     }
 }

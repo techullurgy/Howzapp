@@ -14,9 +14,9 @@ kotlin {
 
 dependencies {
 
-    implementation(project(":root:database:core"))
-    implementation(project(":feature:chats:di"))
-    implementation(project(":feature:chats:presentation:api"))
+    implementation(projects.root.database.core)
+    implementation(projects.feature.chats.di)
+    implementation(projects.feature.chats.presentation.api)
 
     implementation(app.androidx.activity.compose)
 

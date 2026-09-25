@@ -1,7 +1,6 @@
 package com.techullurgy.howzapp.core.files
 
 import android.content.ContentResolver
-import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import kotlinx.coroutines.Dispatchers
@@ -15,8 +14,11 @@ import java.io.InputStream
 sealed interface AndroidFile : PlatformFile {
     class Shared(
         private val uri: Uri,
-        private val contentResolver: ContentResolver
+        private val contentResolver: ContentResolver = AndroidFileContext.contentResolver
     ) : AndroidFile {
+        override val identifier: String
+            get() = uri.toString()
+
         override suspend fun getSize(): Long = withContext(Dispatchers.IO) {
             var size = 0L
             val cursor = contentResolver.query(uri, null, null, null, null)
@@ -32,7 +34,7 @@ sealed interface AndroidFile : PlatformFile {
                     contentResolver.openAssetFileDescriptor(uri, "r")?.use { fd ->
                         size = fd.length
                     }
-                } catch (e: Exception) { /* Ignore */ }
+                } catch (_: Exception) { /* Ignore */ }
             }
             size
         }
@@ -61,6 +63,9 @@ sealed interface AndroidFile : PlatformFile {
     }
 
     class Internal(private val file: File) : AndroidFile {
+        override val identifier: String
+            get() = file.absolutePath
+
         override suspend fun getSize(): Long = withContext(Dispatchers.IO) { file.length() }
 
         override suspend fun readChunks(chunkSize: Int, onChunk: suspend (ByteArray, Int) -> Unit) {
@@ -70,6 +75,15 @@ sealed interface AndroidFile : PlatformFile {
                 onChunk = onChunk
             )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other !is Internal) return false
+            return file.absolutePath == other.file.absolutePath
+        }
+
+        override fun hashCode(): Int = file.absolutePath.hashCode()
+        override fun toString(): String = "AndroidFile.Internal(path=${file.absolutePath})"
     }
 }
 

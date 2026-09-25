@@ -8,6 +8,7 @@ plugins {
     alias(app.plugins.koinCompiler) apply false
     alias(app.plugins.ksp) apply false
     alias(app.plugins.room3) apply false
+    alias(app.plugins.testBalloon) apply false
 
-    alias(project.plugins.conventions.kmp.library) apply false
+    alias(projectLibs.plugins.conventions.kmp.library) apply false
 }

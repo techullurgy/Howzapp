@@ -1,9 +1,21 @@
 package com.techullurgy.howzapp.root.database.di
 
-@org.koin.core.annotation.Module
+import androidx.room3.Room
+import androidx.room3.RoomDatabase
+import androidx.sqlite.driver.web.WebWorkerSQLiteDriver
+import com.techullurgy.howzapp.root.database.HowzappRoomDatabase
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Provided
+import org.koin.core.annotation.Singleton
+import org.koin.core.scope.Scope
+
+@Module
 actual class PlatformModule {
-    @org.koin.core.annotation.Singleton
-    internal actual fun roomDatabaseBuilder(@org.koin.core.annotation.Provided scope: org.koin.core.scope.Scope): androidx.room3.RoomDatabase.Builder<com.techullurgy.howzapp.database.core.HowzappRoomDatabase> {
-        TODO("Not yet implemented")
+    @Singleton
+    internal actual fun roomDatabaseBuilder(@Provided scope: Scope): RoomDatabase.Builder<HowzappRoomDatabase> {
+        return Room.databaseBuilder<HowzappRoomDatabase>("howzapp_room.db")
+            .setDriver(webWorkerSQLiteDriver())
     }
 }
+
+expect fun webWorkerSQLiteDriver(): WebWorkerSQLiteDriver

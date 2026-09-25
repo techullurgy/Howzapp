@@ -48,6 +48,7 @@ open class AndroidConfig @Inject constructor(objects: ObjectFactory) {
 }
 
 open class HostTestConfig {
+    var composeUiTest: Boolean = false
     var robolectric: Boolean = false
     var roborazzi: Boolean = false
 

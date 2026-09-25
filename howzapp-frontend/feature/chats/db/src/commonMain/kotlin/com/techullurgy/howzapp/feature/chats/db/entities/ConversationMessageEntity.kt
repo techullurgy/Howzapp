@@ -3,7 +3,6 @@ package com.techullurgy.howzapp.feature.chats.db.entities
 import androidx.room3.Entity
 import androidx.room3.PrimaryKey
 import com.techullurgy.howzapp.feature.chats.db.models.MessageContentStored
-import com.techullurgy.howzapp.feature.chats.db.models.MessageContentTypeStored
 import com.techullurgy.howzapp.feature.chats.db.models.MessageDeliveryStatusStored
 import com.techullurgy.howzapp.feature.chats.db.models.MessageReactionsStored
 
@@ -16,7 +15,6 @@ data class ConversationMessageEntity(
     val createdAt: Long,
     val updatedAt: Long,
     val senderId: String,
-    val type: MessageContentTypeStored,
     val content: MessageContentStored,
     val status: MessageDeliveryStatusStored?,
     val reactions: MessageReactionsStored,

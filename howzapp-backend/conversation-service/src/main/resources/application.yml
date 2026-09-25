@@ -1,0 +1,18 @@
+
+
+spring:
+  cloud:
+    function:
+      definition: userConnectedSink;userDisconnectedSink
+      # Bean Names (Function Types) ===> @Bean fun userConnectedSink(): suspend (Flow<String>) -> Unit = { i -> i.collect {...} }
+    stream:
+      bindings:
+        userConnectedSink-in-0:
+          destination: user-connected-topic
+          group: conversation-group
+        userDisconnectedSink-in-0:
+          destination: user-disconnected-topic
+          group: conversation-group
+      kafka:
+        binder:
+          brokers: localhost:9092

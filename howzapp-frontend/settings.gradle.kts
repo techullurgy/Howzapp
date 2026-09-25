@@ -1,5 +1,9 @@
 rootProject.name = "howzapp-frontend"
 
+val sharedVersions = java.util.Properties().apply {
+    file("../gradle/versions-shared.properties").inputStream().use { load(it) }
+}
+
 pluginManagement {
     includeBuild("build-logic")
 
@@ -27,12 +31,13 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("app") {
             from(files("../gradle/app.versions.toml"))
+            version("kotlin", sharedVersions.getProperty("kotlin"))
+            version("serialization", sharedVersions.getProperty("serialization"))
+            version("coroutines", sharedVersions.getProperty("coroutines"))
+            version("datetime", sharedVersions.getProperty("datetime"))
         }
-        create("project") {
+        create("projectLibs") {
             from(files("../gradle/project.versions.toml"))
-        }
-        create("common") {
-            from(files("../gradle/common.versions.toml"))
         }
     }
 
@@ -48,6 +53,10 @@ dependencyResolutionManagement {
     }
 }
 
+// It enables the way of writing =>
+// implementation(projects.core.preview.commonLibs)
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
@@ -57,9 +66,12 @@ plugins {
 //include(":shared")
 
 include(":core:navigation")
+include(":core:qualifiers")
 include(":core:domain")
+include(":core:utils")
 include(":core:network:websockets")
 include(":core:network:http")
+include(":core:network:fileupload")
 include(":core:network:system")
 include(":core:files")
 include(":core:session")

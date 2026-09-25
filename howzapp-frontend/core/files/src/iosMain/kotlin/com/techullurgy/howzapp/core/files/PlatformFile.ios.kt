@@ -1,5 +1,6 @@
 package com.techullurgy.howzapp.core.files
 
+import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
@@ -10,6 +11,9 @@ import platform.posix.memcpy
 
 @OptIn(ExperimentalForeignApi::class)
 class AppleFile(val url: NSURL) : PlatformFile {
+
+    override val identifier: String
+        get() = url.absoluteString ?: url.path.orEmpty()
 
     override suspend fun getSize(): Long {
         val dict = NSFileManager.defaultManager.attributesOfItemAtPath(url.path!!, null)

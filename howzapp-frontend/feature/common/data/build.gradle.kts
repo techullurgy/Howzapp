@@ -1,5 +1,5 @@
 plugins {
-    alias(project.plugins.conventions.kmp.library)
+    alias(projectLibs.plugins.conventions.kmp.library)
 }
 
 kmpConvention {
@@ -19,8 +19,8 @@ kmpConvention {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":feature:common:db"))
-            implementation(project(":feature:common:domain:api"))
+            implementation(projects.feature.common.db)
+            implementation(projects.feature.common.domain.api)
         }
     }
 }
