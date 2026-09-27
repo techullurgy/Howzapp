@@ -5,7 +5,5 @@ sealed interface MessageUploadStatus {
     data class Uploading(val progress: Float): MessageUploadStatus
     data class Completed(val publicUrl: String): MessageUploadStatus
     data object Cancelled: MessageUploadStatus
-    data class Failed(
-        val error: Throwable
-    ): MessageUploadStatus
+    data object Failed: MessageUploadStatus
 }

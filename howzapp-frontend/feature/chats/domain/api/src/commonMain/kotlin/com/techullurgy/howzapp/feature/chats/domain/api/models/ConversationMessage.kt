@@ -8,6 +8,7 @@ import kotlin.time.Instant
 data class ConversationMessage(
     val id: ConversationMessageId,
     val conversationId: ConversationId,
+    val seqNo: Long,
     val senderId: UserId,
     val content: MessageContent,
     val timestamp: Instant,

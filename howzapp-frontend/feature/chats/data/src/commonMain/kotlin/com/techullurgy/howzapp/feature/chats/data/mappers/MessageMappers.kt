@@ -7,6 +7,7 @@ import com.techullurgy.howzapp.common.dto.MessageDeliveryStatusDto
 import com.techullurgy.howzapp.common.dto.MessageDto
 import com.techullurgy.howzapp.common.dto.MessageReactionDto
 import com.techullurgy.howzapp.common.dto.SystemEventDto
+import com.techullurgy.howzapp.core.domain.UploadId
 import com.techullurgy.howzapp.feature.chats.db.entities.ConversationMessageEntity
 import com.techullurgy.howzapp.feature.chats.db.models.CallTypeStored
 import com.techullurgy.howzapp.feature.chats.db.models.ContactCardStored
@@ -15,12 +16,17 @@ import com.techullurgy.howzapp.feature.chats.db.models.MessageContentStored
 import com.techullurgy.howzapp.feature.chats.db.models.MessageDeliveryStatusStored
 import com.techullurgy.howzapp.feature.chats.db.models.MessageReactionStored
 import com.techullurgy.howzapp.feature.chats.db.models.MessageReactionsStored
+import com.techullurgy.howzapp.feature.chats.db.models.MessageUploadStatusStored
 import com.techullurgy.howzapp.feature.chats.db.models.PollOptionStored
 import com.techullurgy.howzapp.feature.chats.db.models.SystemEventStored
+import com.techullurgy.howzapp.feature.chats.db.relations.OutboxMessageRelation
 import com.techullurgy.howzapp.feature.chats.domain.api.models.ConversationId
 import com.techullurgy.howzapp.feature.chats.domain.api.models.ConversationMessage
 import com.techullurgy.howzapp.feature.chats.domain.api.models.ConversationMessageId
 import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageDeliveryStatus
+import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageUploadStatus
+import com.techullurgy.howzapp.feature.chats.domain.api.models.OutboxMessage
+import com.techullurgy.howzapp.feature.chats.domain.api.models.OutboxMessageContent
 import com.techullurgy.howzapp.feature.chats.domain.api.models.content.AudioMessage
 import com.techullurgy.howzapp.feature.chats.domain.api.models.content.CallMessage
 import com.techullurgy.howzapp.feature.chats.domain.api.models.content.CallType
@@ -50,6 +56,7 @@ internal fun MessageDto.toConversationMessage(): ConversationMessage {
     return ConversationMessage(
         id = ConversationMessageId(messageId),
         conversationId = ConversationId(conversationId),
+        seqNo = seqNo,
         senderId = UserId(senderId),
         content = content.toMessageContent(),
         timestamp = Instant.fromEpochMilliseconds(timestamp),
@@ -60,7 +67,7 @@ internal fun MessageDto.toConversationMessage(): ConversationMessage {
         edited = edited,
         starred = starred,
         deleted = deleted,
-        isRead = null
+        isRead = isRead
     )
 }
 
@@ -68,7 +75,7 @@ internal fun ConversationMessage.toConversationMessageEntity(): ConversationMess
     return ConversationMessageEntity(
         id = id.id,
         conversation = conversationId.id,
-        seqId = 1,
+        seqNo = seqNo,
         senderId = senderId.id,
         createdAt = timestamp.toEpochMilliseconds(),
         updatedAt = Clock.System.now().toEpochMilliseconds(),
@@ -88,6 +95,7 @@ internal fun ConversationMessageEntity.toConversationMessage(): ConversationMess
     return ConversationMessage(
         id = ConversationMessageId(id),
         conversationId = ConversationId(conversation),
+        seqNo = seqNo,
         senderId = UserId(senderId),
         content = content.toMessageContent(),
         timestamp = Instant.fromEpochMilliseconds(createdAt),
@@ -162,7 +170,6 @@ internal fun MessageContentStored.toMessageContent(): MessageContent {
             event = when(val event = event) {
                 is SystemEventStored.AdminPromotedStored -> SystemEvent.AdminPromoted(UserId(event.userId))
                 is SystemEventStored.AdminRemovedStored -> SystemEvent.AdminRemoved(UserId(event.userId))
-                SystemEventStored.EndToEndEncryptionEnabledStored -> SystemEvent.EndToEndEncryptionEnabled
                 is SystemEventStored.GroupIconChangedStored -> SystemEvent.GroupIconChanged(event.iconUrl)
                 is SystemEventStored.GroupNameChangedStored -> SystemEvent.GroupNameChanged(
                     oldName = event.oldName,
@@ -224,7 +231,6 @@ internal fun Media.toMediaStored(): MediaStored {
 
 internal fun MessageDeliveryStatusStored.toMessageDeliveryStatus(): MessageDeliveryStatus {
     return when(this) {
-        MessageDeliveryStatusStored.PENDING -> MessageDeliveryStatus.PENDING
         MessageDeliveryStatusStored.SENT -> MessageDeliveryStatus.SENT
         MessageDeliveryStatusStored.DELIVERED -> MessageDeliveryStatus.DELIVERED
         MessageDeliveryStatusStored.READ -> MessageDeliveryStatus.READ
@@ -300,7 +306,6 @@ internal fun MessageContent.toMessageContentStored(): MessageContentStored {
             event = when(val event = event) {
                 is SystemEvent.AdminPromoted -> SystemEventStored.AdminPromotedStored(event.userId.id)
                 is SystemEvent.AdminRemoved -> SystemEventStored.AdminRemovedStored(event.userId.id)
-                SystemEvent.EndToEndEncryptionEnabled -> SystemEventStored.EndToEndEncryptionEnabledStored
                 is SystemEvent.GroupIconChanged -> SystemEventStored.GroupIconChangedStored(event.iconUrl)
                 is SystemEvent.GroupNameChanged -> SystemEventStored.GroupNameChangedStored(
                     oldName = event.oldName,
@@ -326,7 +331,6 @@ internal fun MessageContent.toMessageContentStored(): MessageContentStored {
 
 internal fun MessageDeliveryStatus.toMessageDeliveryStatusStored(): MessageDeliveryStatusStored {
     return when(this) {
-        MessageDeliveryStatus.PENDING -> MessageDeliveryStatusStored.PENDING
         MessageDeliveryStatus.SENT -> MessageDeliveryStatusStored.SENT
         MessageDeliveryStatus.DELIVERED -> MessageDeliveryStatusStored.DELIVERED
         MessageDeliveryStatus.READ -> MessageDeliveryStatusStored.READ
@@ -405,7 +409,6 @@ internal fun MessageContentDto.toMessageContent(): MessageContent {
             event = when(val event = event) {
                 is SystemEventDto.AdminPromotedDto -> SystemEvent.AdminPromoted(UserId(event.userId))
                 is SystemEventDto.AdminRemovedDto -> SystemEvent.AdminRemoved(UserId(event.userId))
-                SystemEventDto.EndToEndEncryptionEnabledDto -> SystemEvent.EndToEndEncryptionEnabled
                 is SystemEventDto.GroupIconChangedDto -> SystemEvent.GroupIconChanged(event.iconUrl)
                 is SystemEventDto.GroupNameChangedDto -> SystemEvent.GroupNameChanged(
                     oldName = event.oldName,
@@ -444,3 +447,22 @@ internal fun MessageReactionDto.toMessageReaction(): MessageReaction {
         timestamp = Instant.fromEpochMilliseconds(timestamp)
     )
 }
+
+internal fun OutboxMessageRelation.toOutboxMessage(): OutboxMessage = OutboxMessage(
+    conversationId = outbox.conversationId,
+    batchId = outbox.id,
+    timestamp = outbox.timestamp,
+    payload = OutboxMessageContent(
+        content = outbox.payload.toMessageContent(),
+        uploadStatuses = upload.takeIf { it.isNotEmpty() }?.map {
+            val status: MessageUploadStatus = when(val st = it.status) {
+                MessageUploadStatusStored.Cancelled -> MessageUploadStatus.Cancelled
+                MessageUploadStatusStored.Failed -> MessageUploadStatus.Failed
+                MessageUploadStatusStored.Initiated -> MessageUploadStatus.Initiated
+                is MessageUploadStatusStored.Success -> MessageUploadStatus.Completed(st.publicUrl)
+                is MessageUploadStatusStored.Uploading -> MessageUploadStatus.Uploading(st.progress)
+            }
+            UploadId(it.uploadId) to status
+        }
+    )
+)

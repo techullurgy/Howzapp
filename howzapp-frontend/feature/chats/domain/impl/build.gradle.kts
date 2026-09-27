@@ -21,7 +21,6 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.core.utils)
             implementation(projects.feature.chats.domain.api)
-            implementation(projects.feature.common.domain.api)
         }
     }
 }

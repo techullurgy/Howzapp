@@ -9,12 +9,16 @@ import androidx.paging.PagingData
 import com.techullurgy.howzapp.core.database.Database
 import com.techullurgy.howzapp.feature.chats.data.paging.ConversationPagingSource
 import com.techullurgy.howzapp.feature.chats.data.paging.ConversationRemoteMediator
+import com.techullurgy.howzapp.feature.chats.domain.api.models.Conversation
 import com.techullurgy.howzapp.feature.chats.domain.api.models.ConversationMessage
 import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageAcks
 import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageOutboxEntry
+import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageOutboxStatus
 import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageUpload
 import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageUploadStatus
+import com.techullurgy.howzapp.feature.chats.domain.api.models.OutboxMessage
 import com.techullurgy.howzapp.feature.chats.domain.api.models.PendingMessageAcks
+import com.techullurgy.howzapp.feature.chats.domain.api.models.content.MessageContent
 import com.techullurgy.howzapp.feature.chats.domain.api.repositories.ConversationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -28,12 +32,22 @@ internal class ConversationRepositoryImpl(
     @Provided private val coroutineScope: CoroutineScope,
     @Provided private val database: Database
 ): ConversationRepository {
+    override suspend fun saveConversation(conversation: Conversation) {
+        conversationLocalRepository.saveConversation(conversation)
+    }
+
     override suspend fun saveMessages(messages: List<ConversationMessage>) {
-        TODO("Not yet implemented")
+        messages.forEach { message ->
+            conversationLocalRepository.saveMessage(message)
+        }
+    }
+
+    override fun observeForConversation(conversationId: String): Flow<Conversation?> {
+        return conversationLocalRepository.observeForConversation(conversationId)
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun observeForMessages(
+    override fun observeForPagedMessages(
         conversationId: String,
         initialRefreshKey: Long
     ): Flow<PagingData<ConversationMessage>> {
@@ -59,6 +73,14 @@ internal class ConversationRepositoryImpl(
                 )
             }
         ).flow
+    }
+
+    override fun observeForOutboxMessagesInComplete(conversationId: String): Flow<List<OutboxMessage>> {
+        return conversationLocalRepository.observeForOutboxMessagesInComplete(conversationId)
+    }
+
+    override fun observeUnreadMessagesCount(conversationId: String): Flow<Int> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun obtainFirstUnreadMessage(conversationId: String): ConversationMessage? {
@@ -109,18 +131,18 @@ internal class ConversationRepositoryImpl(
     }
 
     override suspend fun syncHandshake(): Result<List<String>> {
-        TODO("Not yet implemented")
+        return conversationApi.syncHandshake()
     }
 
     override suspend fun syncConversationFromServer(
         conversationId: String,
         lastSeqId: Long
     ): Result<List<ConversationMessage>> {
-        TODO("Not yet implemented")
+        return conversationApi.syncConversationFromServer(conversationId, lastSeqId)
     }
 
     override suspend fun sendPendingMessageAck(acks: PendingMessageAcks): Result<Unit> {
-        TODO("Not yet implemented")
+        return conversationApi.sendPendingMessageAck(acks)
     }
 
     override suspend fun findBatchInMessageUploadsPending(batchId: String): List<MessageUpload> {
@@ -136,5 +158,35 @@ internal class ConversationRepositoryImpl(
         updatedState: MessageUploadStatus
     ) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun updateMessageOutboxStateTo(
+        batchId: String,
+        status: MessageOutboxStatus
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun isBatchUploadCompleteSuccessfully(batchId: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findMessageUploadEntry(
+        batchId: String,
+        uploadId: String
+    ): MessageUpload {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun upsertMessageOutboxEntry(entry: MessageOutboxEntry): MessageOutboxEntry {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun sendMessage(
+        conversationId: String,
+        batchId: String,
+        payload: MessageContent
+    ): Result<ConversationMessage> {
+        return conversationApi.sendMessage(conversationId, batchId, payload)
     }
 }

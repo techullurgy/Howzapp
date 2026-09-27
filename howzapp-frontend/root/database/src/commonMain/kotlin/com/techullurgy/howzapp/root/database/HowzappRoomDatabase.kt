@@ -14,13 +14,22 @@ import com.techullurgy.howzapp.feature.chats.db.dao.PendingMessageAcksDao
 import com.techullurgy.howzapp.feature.chats.db.entities.ConversationEntity
 import com.techullurgy.howzapp.feature.chats.db.entities.ConversationMessageEntity
 import com.techullurgy.howzapp.feature.chats.db.entities.ConversationMessageOutboxEntity
+import com.techullurgy.howzapp.feature.chats.db.entities.DirectConversationEntity
+import com.techullurgy.howzapp.feature.chats.db.entities.GroupConversationEntity
+import com.techullurgy.howzapp.feature.chats.db.entities.GroupConversationParticipantsCrossRef
 import com.techullurgy.howzapp.feature.chats.db.entities.MessageUploadsEntity
 import com.techullurgy.howzapp.feature.chats.db.entities.PendingMessageAcksEntity
+import com.techullurgy.howzapp.feature.users.db.dao.UserDao
+import com.techullurgy.howzapp.feature.users.db.entities.UserEntity
 
 @Database(
     version = 1,
     entities = [
+        UserEntity::class,
         ConversationEntity::class,
+        DirectConversationEntity::class,
+        GroupConversationEntity::class,
+        GroupConversationParticipantsCrossRef::class,
         ConversationMessageEntity::class,
         ConversationMessageOutboxEntity::class,
         PendingMessageAcksEntity::class,
@@ -33,6 +42,7 @@ import com.techullurgy.howzapp.feature.chats.db.entities.PendingMessageAcksEntit
 )
 @ConstructedBy(HowzappDatabaseConstructor::class)
 internal abstract class HowzappRoomDatabase : RoomDatabase() {
+    abstract val userDao: UserDao
     abstract val conversationDao: ConversationDao
     abstract val conversationMessageDao: ConversationMessageDao
     abstract val conversationMessageOutboxDao: ConversationMessageOutboxDao

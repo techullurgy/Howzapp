@@ -39,6 +39,4 @@ sealed interface SystemEvent {
     data class AdminRemoved(
         val userId: UserId
     ) : SystemEvent
-
-    data object EndToEndEncryptionEnabled : SystemEvent
 }

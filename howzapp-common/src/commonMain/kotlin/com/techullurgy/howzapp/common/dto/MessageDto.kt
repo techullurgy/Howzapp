@@ -6,16 +6,18 @@ import kotlinx.serialization.Serializable
 data class MessageDto(
     val messageId: String,
     val conversationId: String,
+    val seqNo: Long,
     val senderId: String,
     val content: MessageContentDto,
     val timestamp: Long,
-    val reactions: List<MessageReactionDto> = emptyList(),
-    val replyTo: String? = null,
+    val reactions: List<MessageReactionDto>,
+    val replyTo: String?,
     val forwarded: Boolean,
     val edited: Boolean,
     val starred: Boolean,
     val deleted: Boolean,
-    val status: MessageDeliveryStatusDto?
+    val status: MessageDeliveryStatusDto?,
+    val isRead: Boolean?
 )
 
 enum class MessageDeliveryStatusDto {

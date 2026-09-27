@@ -19,3 +19,11 @@ kmpConvention {
         serialization = true
     }
 }
+
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.feature.users.db)
+        }
+    }
+}

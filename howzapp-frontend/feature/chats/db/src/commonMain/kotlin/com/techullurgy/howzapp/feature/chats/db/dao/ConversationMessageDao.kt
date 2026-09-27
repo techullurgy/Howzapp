@@ -1,21 +1,25 @@
 package com.techullurgy.howzapp.feature.chats.db.dao
 
 import androidx.room3.Dao
+import androidx.room3.Query
+import androidx.room3.Upsert
+import com.techullurgy.howzapp.feature.chats.db.entities.ConversationMessageEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ConversationMessageDao {
-//    @Query("""
-//        SELECT *
-//        FROM ConversationMessageEntity
-//        WHERE conversation = :conversationId
-//    """)
-//    fun observeConversationMessages(conversationId: String): Flow<List<ConversationMessageEntity>>
-//
-//    @Upsert
-//    suspend fun upsert(message: ConversationMessageEntity)
-//
-//    @Upsert
-//    suspend fun upsertAll(messages: List<ConversationMessageEntity>)
+    @Query("""
+        SELECT *
+        FROM ConversationMessageEntity
+        WHERE conversation = :conversationId
+    """)
+    fun observeConversationMessages(conversationId: String): Flow<List<ConversationMessageEntity>>
+
+    @Upsert
+    suspend fun upsert(message: ConversationMessageEntity)
+
+    @Upsert
+    suspend fun upsertAll(messages: List<ConversationMessageEntity>)
 //
 //    @Query("""DELETE FROM ConversationMessageEntity WHERE conversation = :conversationId""")
 //    suspend fun clearConversation(conversationId: String)

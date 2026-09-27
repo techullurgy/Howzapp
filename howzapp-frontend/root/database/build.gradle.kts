@@ -35,7 +35,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.core.database)
-            implementation(projects.feature.common.db)
+            implementation(projects.feature.users.db)
             implementation(projects.feature.chats.db)
 
             implementation(app.kotlinx.serialization.json)

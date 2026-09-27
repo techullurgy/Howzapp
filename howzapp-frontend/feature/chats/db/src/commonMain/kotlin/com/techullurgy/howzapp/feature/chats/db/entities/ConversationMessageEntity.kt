@@ -11,7 +11,7 @@ data class ConversationMessageEntity(
     @PrimaryKey
     val id: String,
     val conversation: String,
-    val seqId: Int,
+    val seqNo: Long,
     val createdAt: Long,
     val updatedAt: Long,
     val senderId: String,

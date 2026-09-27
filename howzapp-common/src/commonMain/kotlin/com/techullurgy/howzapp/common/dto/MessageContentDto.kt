@@ -152,7 +152,4 @@ sealed interface SystemEventDto {
     data class AdminRemovedDto(
         val userId: String
     ) : SystemEventDto
-
-    @Serializable
-    data object EndToEndEncryptionEnabledDto : SystemEventDto
 }

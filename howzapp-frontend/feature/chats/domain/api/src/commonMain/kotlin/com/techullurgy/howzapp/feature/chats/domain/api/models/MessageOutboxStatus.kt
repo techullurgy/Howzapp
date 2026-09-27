@@ -1,5 +1,8 @@
 package com.techullurgy.howzapp.feature.chats.domain.api.models
 
 enum class MessageOutboxStatus {
-    PENDING, READY, FAILED, CANCELLED
+    PENDING, READY, FAILED, CANCELLED;
+
+    val isPending get() = this == PENDING || this == READY
+    val isFailed get() = this == FAILED || this == CANCELLED
 }

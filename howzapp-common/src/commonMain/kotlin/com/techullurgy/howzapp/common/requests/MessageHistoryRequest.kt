@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MessageHistoryRequest(
     val conversationId: String,
-    val loadKey: Long,
+    val keySeqNo: Long,
     val loadSize: Int
 )

@@ -5,8 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NewMessageRequest(
-    val senderId: String,
     val conversationId: String,
-    val localMessageId: String,
+    val localBatchId: String,
     val messageContent: MessageContentDto
 )

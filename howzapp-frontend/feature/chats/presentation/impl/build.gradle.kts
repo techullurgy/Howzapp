@@ -24,14 +24,22 @@ kmpConvention {
 
     compose {
         enabled = true
+        foundation = true
+        ui = true
+    }
+
+    kmp {
+        datetime = true
     }
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":feature:chats:presentation:api"))
-            implementation(project(":feature:chats:domain:api"))
+            implementation(projects.core.presentation)
+            implementation(projects.feature.chats.presentation.api)
+            implementation(projects.feature.chats.domain.api)
+
             implementation(app.androidx.paging3.compose)
         }
     }

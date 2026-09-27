@@ -1,13 +1,10 @@
 package com.techullurgy.howzapp.common.responses
 
+import com.techullurgy.howzapp.common.dto.MessageDto
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class NewMessageResponse(
-    val messageId: String,
-    // updated conversation id from server
-    val conversationId: String,
-    val localMessageId: String,
-    // Has value, if update needed locally
-    val localConversationId: String?,
+    val originalMessage: MessageDto,
+    val localBatchId: String,
 )

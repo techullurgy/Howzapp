@@ -6,7 +6,7 @@ import com.techullurgy.howzapp.root.database.HowzappRoomDatabase
 
 internal actual fun howzappDatabase(): HowzappRoomDatabase {
     return Room.inMemoryDatabaseBuilder<HowzappRoomDatabase>()
-        .setDriver(BundledSQLiteDriver())
+
         .allowMainThreadQueries()
         .build()
 }

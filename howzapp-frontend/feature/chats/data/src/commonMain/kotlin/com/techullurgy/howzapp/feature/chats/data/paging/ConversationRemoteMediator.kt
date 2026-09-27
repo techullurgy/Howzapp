@@ -47,11 +47,13 @@ internal class ConversationRemoteMediator(
             // Fetch network messages based on direction and loadKey
             val messageHistoryResponses = when (loadType) {
                 LoadType.REFRESH -> {
-                    val key = loadKey ?: Clock.System.now().toEpochMilliseconds()
-                    conversationApi.getMessagesAround(conversationId, key, state.config.initialLoadSize)
+                    val key = loadKey ?: -1
+//                    conversationApi.getMessagesAround(conversationId, key, state.config.initialLoadSize)
+                    TODO()
                 }
                 LoadType.PREPEND -> {
-                    conversationApi.getMessagesAfter(conversationId, loadKey!!, state.config.pageSize)
+//                    conversationApi.getMessagesAfter(conversationId, loadKey!!, state.config.pageSize)
+                    TODO()
                 }
                 LoadType.APPEND -> {
                     conversationApi.getMessagesBefore(conversationId, loadKey!!, state.config.pageSize)
@@ -59,13 +61,13 @@ internal class ConversationRemoteMediator(
             }
 
             database.withWriteTransaction {
-                messageHistoryResponses.messages.forEach {
-                    val message = it.message.toConversationMessage()
+                messageHistoryResponses.history.forEach {
+                    val message = it.toConversationMessage()
                     conversationLocalRepository.saveMessage(message)
                 }
             }
 
-            val endOfPaginationReached = messageHistoryResponses.messages.isEmpty()
+            val endOfPaginationReached = messageHistoryResponses.history.firstOrNull { it.seqNo == 1L } != null
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch(e: Exception) {
             MediatorResult.Error(e)

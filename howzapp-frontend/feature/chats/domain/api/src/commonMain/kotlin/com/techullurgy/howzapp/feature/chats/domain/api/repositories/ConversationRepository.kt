@@ -1,24 +1,35 @@
 package com.techullurgy.howzapp.feature.chats.domain.api.repositories
 
 import androidx.paging.PagingData
-import com.techullurgy.howzapp.core.domain.UploadId
+import com.techullurgy.howzapp.feature.chats.domain.api.models.Conversation
 import com.techullurgy.howzapp.feature.chats.domain.api.models.ConversationMessage
 import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageAcks
 import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageOutboxEntry
 import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageOutboxStatus
 import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageUpload
 import com.techullurgy.howzapp.feature.chats.domain.api.models.MessageUploadStatus
+import com.techullurgy.howzapp.feature.chats.domain.api.models.OutboxMessage
 import com.techullurgy.howzapp.feature.chats.domain.api.models.PendingMessageAcks
 import com.techullurgy.howzapp.feature.chats.domain.api.models.content.MessageContent
 import kotlinx.coroutines.flow.Flow
 
 interface ConversationRepository {
+    suspend fun saveConversation(conversation: Conversation)
     suspend fun saveMessages(messages: List<ConversationMessage>)
 
-    fun observeForMessages(
+    fun observeForConversation(conversationId: String): Flow<Conversation?>
+
+    fun observeForPagedMessages(
         conversationId: String,
         initialRefreshKey: Long
     ): Flow<PagingData<ConversationMessage>>
+
+    /**
+     * where status != COMPLETE
+     */
+    fun observeForOutboxMessagesInComplete(conversationId: String): Flow<List<OutboxMessage>>
+
+    fun observeUnreadMessagesCount(conversationId: String): Flow<Int>
 
     suspend fun obtainFirstUnreadMessage(conversationId: String): ConversationMessage?
     suspend fun findMessageInConversation(conversationId: String, messageId: String): ConversationMessage?

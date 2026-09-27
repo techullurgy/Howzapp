@@ -23,8 +23,7 @@ internal class DefaultSaveMessagesToLocalDatabaseTask(
         messages: List<ConversationMessage>
     ) {
         database.withWriteTransaction {
-            // TODO: Save Conversation to the database first, if its new
-
+            conversationRepository.saveConversation(conversation)
 
             // TODO: Need Pre-Processing for messages, before save ????
             conversationRepository.saveMessages(messages)

@@ -8,6 +8,7 @@ import com.techullurgy.howzapp.feature.chats.db.dao.ConversationMessageDao
 import com.techullurgy.howzapp.feature.chats.db.dao.ConversationMessageOutboxDao
 import com.techullurgy.howzapp.feature.chats.db.dao.MessageUploadsDao
 import com.techullurgy.howzapp.feature.chats.db.dao.PendingMessageAcksDao
+import com.techullurgy.howzapp.feature.users.db.dao.UserDao
 import com.techullurgy.howzapp.root.database.HowzappRoomDatabase
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Provided
@@ -22,6 +23,7 @@ internal expect class PlatformModule {
 
 @Module
 internal class DatabaseDaoModule {
+    @Singleton internal fun userDao(db: HowzappRoomDatabase): UserDao = db.userDao
     @Singleton internal fun conversationDao(db: HowzappRoomDatabase): ConversationDao = db.conversationDao
     @Singleton internal fun conversationMessageDao(db: HowzappRoomDatabase): ConversationMessageDao = db.conversationMessageDao
     @Singleton internal fun conversationMessageOutboxDao(db: HowzappRoomDatabase): ConversationMessageOutboxDao = db.conversationMessageOutboxDao

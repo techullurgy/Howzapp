@@ -152,7 +152,4 @@ sealed interface SystemEventStored {
     data class AdminRemovedStored(
         val userId: String
     ) : SystemEventStored
-
-    @Serializable
-    data object EndToEndEncryptionEnabledStored : SystemEventStored
 }
